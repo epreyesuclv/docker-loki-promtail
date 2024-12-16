@@ -11,6 +11,8 @@ ingester:
   flush_check_period: 1s
 
 storage_config:
+  boltdb:
+    directory: /loki/index
   filesystem:
     directory: /loki/chunks
 
@@ -18,15 +20,28 @@ schema_config:
   configs:
     - from: 2024-04-01
       object_store: filesystem
-      store: filesystem
+      store: tsdb
       schema: v13
       index:
         prefix: index_
         period: 24h
 
+common:
+  path_prefix: /loki
+  ring:
+    instance_addr: 127.0.0.1
+    kvstore:
+      store: inmemory
+  replication_factor: 1
+  
 compactor:
   working_directory: /tmp/compactor
 
 limits_config:
   max_streams_per_user: 1000000
   max_global_streams_per_user: 1000000
+  reject_old_samples: false
+
+table_manager:
+  retention_deletes_enabled: true
+  retention_period: 168h # 7 days
