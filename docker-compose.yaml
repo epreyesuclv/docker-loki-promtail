@@ -13,6 +13,7 @@ services:
       - loki-stack
     environment:
       - LOG_LEVEL=debug
+    user: "${UID}:${GID}"  # Run as current host user to avoid permission issues
 
 
   promtail:
