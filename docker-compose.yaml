@@ -7,7 +7,7 @@ services:
       - "3100:3100"
     volumes:
       - ./loki-config.yaml:/loki/loki-config.yaml
-      - ./loki-data:/loki
+      - ./loki-data:/loki:rw
     command: -config.file=/loki/loki-config.yaml
     networks:
       - loki-stack
@@ -21,7 +21,7 @@ services:
     container_name: promtail
     volumes:
       - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml
-      - /var/log:/var/log
+      - /var/log:/var/log:rw
     command: -config.file=/etc/promtail/promtail-config.yaml
     depends_on: 
       - loki
@@ -32,8 +32,8 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     volumes:
-      - ./grafana-data:/var/lib/grafana   # Persist Grafana configuration
-      - ./grafana-provisioning:/etc/grafana/provisioning  # Optional: Use provisioning files to auto-configure datasources
+      - ./grafana-data:/var/lib/grafana:rw 
+      - ./grafana-provisioning:/etc/grafana/provisioning:rw
    
     ports:
       - "3000:3000"
