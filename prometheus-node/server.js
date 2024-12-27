@@ -1,7 +1,7 @@
 const http = require('http');
 const client = require('prom-client');
 const os = require('os');
-const osu = require('os-utils'); 
+const osu = require('os-utils');
 
 const register = new client.Registry();
 
@@ -36,14 +36,14 @@ setInterval(() => {
   totalMemoryGauge.set(totalMemory);
 
   osu.cpuUsage((usage) => {
-    cpuUsageGauge.set(usage * 100); 
+    cpuUsageGauge.set(Number((usage * 1000).toFixed(0)));
   });
-}, 5000); 
+}, 1000);
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   if (req.url === '/metrics') {
     res.setHeader('Content-Type', register.contentType);
-    res.end(register.metrics());
+    res.end(await register.metrics());
   } else {
     res.writeHead(404);
     res.end('Not Found');
