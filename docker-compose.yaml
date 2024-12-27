@@ -57,7 +57,7 @@ services:
   prometheus-node:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./prometheus-node/Dockerfile
     ports:
       - "9100:9100"
     container_name: prometheus-node
