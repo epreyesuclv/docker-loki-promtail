@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'dotnet-app'
+    scrape_interval: 5s
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true  # Skips SSL verification (useful for self-signed certificates)
+    static_configs:
+      - targets: ['93.127.200.28:5001']

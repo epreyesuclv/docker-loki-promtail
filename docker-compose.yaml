@@ -10,10 +10,10 @@ services:
       - ./loki-data:/loki:rw
     command: -config.file=/loki/loki-config.yaml
     networks:
-      - loki-stack
+      - grafana-stack
     environment:
       - LOG_LEVEL=debug
-    user: "${UID}:${GID}"  # Run as current host user to avoid permission issues
+    user: "0:0"  # Run as current host user to avoid permission issues
 
 
   promtail:
@@ -26,7 +26,7 @@ services:
     depends_on: 
       - loki
     networks:
-      - loki-stack
+      - grafana-stack
 
   grafana:
     image: grafana/grafana:latest
@@ -36,15 +36,25 @@ services:
       - ./grafana-provisioning:/etc/grafana/provisioning:rw
    
     ports:
-      - "3000:3000"
+      - "3200:3000"
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
     depends_on:
       - loki
     networks:
-      - loki-stack
+      -  grafana-stack
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      -  grafana-stack
+
 
 networks:
-  loki-stack:
+  grafana-stack:
     driver: bridge
