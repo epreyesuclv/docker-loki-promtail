@@ -8,4 +8,4 @@ scrape_configs:
     tls_config:
       insecure_skip_verify: true  # Skips SSL verification (useful for self-signed certificates)
     static_configs:
-      - targets: ['93.127.200.28:5000',31.220.21.190:5000]
+      - targets: ['93.127.200.28:5000',31.220.21.190:5000,31.220.21.190:9100]

@@ -1,3 +1,4 @@
 /loki-data
 /grafana-data
 /grafana-provisioning
+/node_modules
