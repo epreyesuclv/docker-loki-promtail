@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "os-utils": "^0.0.14",
-    "prom-client": "^15.1.3"
-  }
-}

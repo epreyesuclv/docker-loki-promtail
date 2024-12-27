@@ -54,15 +54,6 @@ services:
     networks:
       -  grafana-stack
 
-  prometheus-node:
-    build:
-      context: .
-      dockerfile: ./prometheus-node/Dockerfile
-    ports:
-      - "9100:9100"
-    container_name: prometheus-node
-    restart: always
-
 networks:
   grafana-stack:
     driver: bridge
