@@ -7,5 +7,6 @@ scrape_configs:
     scheme: http
     tls_config:
       insecure_skip_verify: true  # Skips SSL verification (useful for self-signed certificates)
-    static_configs:
-      - targets: ['93.127.200.28:5000',31.220.21.190:5000,31.220.21.190:9100]
+    file_sd_configs:
+      - files:
+          - /etc/prometheus/targets.json

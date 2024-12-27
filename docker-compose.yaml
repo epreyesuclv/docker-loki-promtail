@@ -49,10 +49,16 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./gen-targets.sh:/gen-targets.sh
     ports:
       - "9090:9090"
     networks:
       -  grafana-stack
+    env_file:
+      - .env
+    environment:
+      - METRICS_TARGET=${METRICS_TARGET}
+    entrypoint: /bin/sh -c "/gen-targets.sh && prometheus --config.file=/etc/prometheus/prometheus.yml"
 
 networks:
   grafana-stack:
