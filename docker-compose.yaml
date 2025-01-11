@@ -44,6 +44,8 @@ services:
       - loki
     networks:
       -  grafana-stack
+    user: "0:0"  # Run as current host user to avoid permission issues
+
 
   prometheus:
     image: prom/prometheus:latest
