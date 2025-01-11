@@ -1,6 +1,7 @@
 apiVersion: 1
 groups:
   - name: example-alerting-group
+    folder: General  # Specify the folder name here
     interval: 60s
     rules:
       - alert: HighErrorRate
